@@ -1,0 +1,519 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal for Stephanie MoDavis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Earthy Trust Palette -->
+    <!-- Application Structure Plan: I've designed a tab-based SPA structure with four main sections: Overview, The Plan, Timeline, and Investment & ROI. This dashboard-like approach was chosen over a linear slide-by-slide format to allow the client to non-linearly explore the proposal's components. It prioritizes user control and quick access to key decision-making information (like pricing and timeline), making the proposal easier to digest and act upon. Key interactions include tabbed navigation to switch views, and interactive charts for the timeline and success metrics. -->
+    <!-- Visualization & Content Choices: Report Info -> Goal -> Viz/Presentation -> Interaction -> Justification -> Library/Method. 1. Architecture Diagram -> Organize -> HTML/CSS Diagram -> Static -> To visually explain the core strategy without images. 2. Project Timeline -> Change -> Interactive Horizontal Bar Chart (Chart.js) -> Hover for details -> To make the 4-week plan tangible and show phase durations. 3. Success Metrics -> Inform/Compare -> Key Metric Cards + Bar Chart (Chart.js) -> Static -> To quantify the expected outcomes and provide a visual anchor for ROI. 4. Funnel Steps -> Organize -> Styled HTML Flowcharts -> Static -> To clearly map out the user journeys for each business 'door'. All visualizations are rendered on Canvas via Chart.js or built with structured HTML/CSS. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: #FDFBF8;
+            color: #33312E;
+        }
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .tab-active {
+            border-color: #C78283;
+            color: #C78283;
+            font-weight: 600;
+        }
+        .tab-inactive {
+            border-color: transparent;
+            color: #706C66;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="app" class="container mx-auto p-4 md:p-8">
+        
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-3xl md:text-4xl font-bold text-[#33312E]">One Brand, Two Doors, Real Results</h1>
+            <p class="text-lg text-[#706C66] mt-2">A Proposal for Stephanie MoDavis</p>
+            <p class="text-sm text-gray-500 mt-1">October 7, 2025</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-gray-200 mb-8">
+            <button data-tab="overview" class="nav-tab py-4 px-6 block border-b-2 text-sm md:text-base focus:outline-none">Overview</button>
+            <button data-tab="plan" class="nav-tab py-4 px-6 block border-b-2 text-sm md:text-base focus:outline-none">The Plan</button>
+            <button data-tab="timeline" class="nav-tab py-4 px-6 block border-b-2 text-sm md:text-base focus:outline-none">Timeline</button>
+            <button data-tab="investment" class="nav-tab py-4 px-6 block border-b-2 text-sm md:text-base focus:outline-none">Investment & ROI</button>
+        </nav>
+
+        <main id="content-container" class="max-w-7xl mx-auto">
+            <!-- Tab Content will be injected here -->
+        </main>
+    </div>
+
+    <script>
+        const appData = {
+            overview: {
+                title: 'Project Overview',
+                intro: 'This section provides a high-level summary of the project\'s core promise, the current situation, and the proposed strategic architecture. It establishes the "why" behind the project, creating a unified brand to guide users through life\'s transitions, inside and out.',
+                corePromise: {
+                    title: 'The Core Promise',
+                    statement: 'Guidance for life transitions, inside and out.',
+                    ctas: ['I need personal guidance.', 'I need a place to live.'],
+                    note: 'Both doors lead to one unified brand presence and grow a single, powerful email list.'
+                },
+                currentState: {
+                    title: 'Current State, High Level',
+                    points: [
+                        { label: 'What Exists', text: 'A primary website, a private real estate landing page, an established YouTube channel, and the Awakening Healthcare thought leadership site.' },
+                        { label: 'The Gap', text: 'The brand message is fragmented across different platforms, leading to thin conversion funnels and inconsistent calls-to-action.' },
+                        { label: 'The Opportunity', text: 'To unify the brand system, creating two clear, compelling pathways that guide users to the right solution and capture measurable results.' }
+                    ]
+                },
+                architecture: {
+                    title: 'The Architecture: Two Doors, One Brand',
+                    hub: 'stephaniemodavis.com',
+                    doors: [
+                        { name: 'Door A: Mentoring', description: 'Guidance for the inside.', funnel: 'Booking Funnel', magnet: 'Lead Magnet A' },
+                        { name: 'Door B: Real Estate', description: 'Guidance for the outside.', funnel: 'Intake Funnel', magnet: 'Lead Magnet B' }
+                    ],
+                    linkedAsset: 'AwakeningHealthcare.com (Thought Leadership & Resources)'
+                }
+            },
+            plan: {
+                title: 'The Plan: Strategy & Deliverables',
+                intro: 'This section details the specific deliverables and strategic initiatives for the project. It covers the website redesign scope, outlines the mechanics of the marketing funnels for both Mentoring and Real Estate, describes the lead magnets designed to attract users, and specifies the foundational SEO work to ensure long-term visibility.',
+                subsections: {
+                    website: {
+                        title: 'Website Redesign Scope',
+                        intro: 'A mobile-first redesign focused on clarity and conversion. We will redesign three key pages to create a cohesive and effective user experience.',
+                        pages: ['Home Page: Redesigned to feature the "Two Doors" model prominently.', 'Mentoring Landing Page: A dedicated page with a clear "Ask Stephanie" intake form.', 'Real Estate Landing Page: A streamlined page built for lead capture with an above-the-fold intake form.'],
+                        alignment: 'System Alignment: Implement a consistent brand system across the header, footer, navigation, and typography.'
+                    },
+                    funnels: {
+                        title: 'Marketing Funnels',
+                        mentoring: {
+                            name: 'Door A: The Mentoring Funnel',
+                            steps: [
+                                { title: '1. Intake', text: 'User fills out the "Ask Stephanie" advice capture form.'},
+                                { title: '2. Auto-Reply', text: 'Immediate email thanks the user, sets expectations, and links to book a paid consult.'},
+                                { title: '3. Booking Path', text: 'Website offers clear options: a paid consultation and a free discovery call.'},
+                                { title: '4. Nurture', text: 'A 3-part email sequence follows up, offering value and linking to the lead magnet.'}
+                            ]
+                        },
+                        realEstate: {
+                            name: 'Door B: The Real Estate Funnel',
+                            steps: [
+                                { title: '1. Intake', text: 'Above-the-fold form captures key details: move date, budget, area, credit, pets, etc.'},
+                                { title: '2. The Promise', text: '"Get 3 curated options in your inbox within 48 hours."'},
+                                { title: '3. Workflow', text: 'Submission triggers CRM profile creation and a confirmation email. All processes adhere to compliance standards.'}
+                            ]
+                        }
+                    },
+                    magnets: {
+                        title: 'Lead Magnets',
+                        mentoring: {
+                            name: 'Mentoring: "The Next Right Move Workbook"',
+                            details: ['Format: Printable PDF & linked Google Doc.', 'Length: 6 to 8 pages.', 'Sections: Clarity Prompts, Decision Tree, 7-Day Micro-Action Plan.', 'CTA: Internal link to book a discovery call or paid consult.']
+                        },
+                        realEstate: {
+                            name: 'Real Estate: "The Houston Apartment Match Guide"',
+                            details: ['Format: Printable PDF.', 'Length: 5 to 7 pages.', 'Sections: Apartment Hunting Checklist, Neighborhood Quick Picks, Budget Calculator, Moving Timeline.', 'CTA: Internal link to the real estate intake form on the website.']
+                        }
+                    },
+                    seo: {
+                        title: 'Basic SEO Optimization Scope',
+                        areas: [
+                            { name: 'On-Page SEO (Up to 5 Pages)', items: ['Keyword-driven Titles and Meta Descriptions', 'Proper H1-H3 heading structure', 'Internal linking strategy and Image Alt Text'] },
+                            { name: 'Technical SEO Basics', items: ['Generate and submit an XML sitemap', 'Ensure a clean robots.txt file', 'Set up Google Analytics 4 (GA4) and Google Search Console (GSC)', 'Establish a UTM link-tracking scheme'] },
+                            { name: 'Local SEO Signals (Real Estate)', items: ['Guidance for Google Business Profile optimization', 'A list of 15 key local directories (citations) to build authority'] }
+                        ]
+                    }
+                }
+            },
+            timeline: {
+                title: 'Project Timeline',
+                intro: 'This interactive timeline visualizes the 4-week project plan, breaking it down into distinct phases from foundational strategy to final launch. The goal is to provide a clear, predictable path to completion, ensuring all deliverables are met efficiently.',
+                chartData: {
+                    labels: ['Week 1: Foundation & Strategy', 'Weeks 2-3: Build & Create', 'Week 4: Test & Launch'],
+                    datasets: [{
+                        label: 'Project Timeline',
+                        data: [
+                          {x: [0, 1], y: 'Week 1: Foundation & Strategy'},
+                          {x: [1, 3], y: 'Weeks 2-3: Build & Create'},
+                          {x: [3, 4], y: 'Week 4: Test & Launch'},
+                        ],
+                        backgroundColor: ['rgba(148, 175, 183, 0.7)', 'rgba(199, 130, 131, 0.7)', 'rgba(224, 189, 155, 0.7)'],
+                        borderColor: ['#94AFB7', '#C78283', '#E0BD9B'],
+                        borderWidth: 1,
+                        borderSkipped: false,
+                    }],
+                },
+                details: [
+                    { week: 'Week 1: Foundation & Strategy', tasks: ['Align on "Two Doors" IA', 'Finalize brand palette & fonts', 'Wire forms to CRM', 'Set up GA4 & GSC', 'Confirm content plan'] },
+                    { week: 'Weeks 2-3: Build & Create', tasks: ['Design & build 3 key pages', 'Write & design both lead magnets', 'Implement on-page SEO', 'Draft nurture email content'] },
+                    { week: 'Week 4: Test & Launch', tasks: ['Connect email sequences', 'Test funnels end-to-end', 'Publish redesigned site', 'Create YouTube thumbnail kit', 'Map out 3 initial video topics'] }
+                ]
+            },
+            investment: {
+                title: 'Investment & ROI',
+                intro: 'This final section outlines the project investment, defines the key metrics we will use to measure success, and lists the clear next steps to begin. It connects the project deliverables to tangible business outcomes and provides a straightforward path to getting started.',
+                pricing: {
+                    title: 'Pricing and Payment',
+                    package: 'Foundation Plus',
+                    fee: '$2,400',
+                    paymentPlan: ['50% ($1,200) to begin the project.', '50% ($1,200) upon go-live in Week 4.', '(A 3-payment option is available if preferred.)'],
+                    includes: ['Strategic planning', 'Full redesign of 3 key pages', '2 lead magnets with email integration', 'Basic SEO Optimization', 'Analytics setup', 'YouTube thumbnail kit'],
+                    alacarte: 'Additional pages, custom integrations, or extra design rounds are billed at $85/hour.'
+                },
+                metrics: {
+                    title: 'Success Metrics',
+                    chartData: {
+                        labels: ['Consult Bookings', 'Qualified Leads', 'Email List Growth', 'Conversion Rate'],
+                        datasets: [{
+                            label: 'Key Performance Indicators',
+                            data: [100, 100, 100, 100],
+                            backgroundColor: ['#C78283', '#94AFB7', '#E0BD9B', '#A99B91'],
+                            borderColor: '#FDFBF8',
+                            borderWidth: 2
+                        }]
+                    },
+                    categories: [
+                        { name: 'Mentoring', items: ['Number of consult bookings per week', 'Email list growth rate', 'YouTube watch time on the top 3 videos'] },
+                        { name: 'Real Estate', items: ['Number of qualified intake forms per week', 'Percentage of options sent within the 48-hour SLA', 'Number of leases closed per month'] },
+                        { name: 'Website', items: ['Conversion rate for each "door" (form fills / visitors)', 'Opt-in rate for each lead magnet'] }
+                    ]
+                },
+                nextSteps: {
+                    title: 'Next Steps',
+                    steps: [
+                        { step: 1, action: 'Approve', details: 'Confirm scope and timeline.' },
+                        { step: 2, action: 'Provide Access', details: 'Share logins for your website, your choice of CRM, and your calendar booking links.' },
+                        { step: 3, action: 'Confirm Details', details: 'Finalize intake form fields and your pricing for consults.' },
+                        { step: 4, action: 'Schedule', details: 'We\'ll set a firm kickoff date and a target delivery date.' }
+                    ]
+                }
+            }
+        };
+
+        const contentContainer = document.getElementById('content-container');
+        const navTabs = document.querySelectorAll('.nav-tab');
+
+        function renderOverview() {
+            const data = appData.overview;
+            return `
+                <div class="fade-in">
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">${data.title}</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">${data.intro}</p>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                           <h3 class="text-xl font-bold mb-4 text-[#C78283]">${data.corePromise.title}</h3>
+                           <p class="text-2xl font-semibold mb-6 text-center italic">"${data.corePromise.statement}"</p>
+                           <div class="flex flex-col sm:flex-row gap-4 mb-4">
+                                ${data.corePromise.ctas.map(cta => `<div class="flex-1 text-center bg-[#FDFBF8] border border-gray-200 rounded-md p-4 font-semibold text-[#33312E]">${cta}</div>`).join('')}
+                           </div>
+                           <p class="text-sm text-center text-gray-500">${data.corePromise.note}</p>
+                        </div>
+
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <h3 class="text-xl font-bold mb-4 text-[#94AFB7]">${data.currentState.title}</h3>
+                            <ul class="space-y-4">
+                                ${data.currentState.points.map(p => `<li><strong class="text-[#33312E]">${p.label}:</strong> <span class="text-gray-600">${p.text}</span></li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-12 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-bold text-center mb-6 text-[#E0BD9B]">${data.architecture.title}</h3>
+                        <div class="text-center">
+                            <div class="inline-block bg-gray-100 text-gray-800 font-bold py-2 px-4 rounded-lg">${data.architecture.hub}</div>
+                            <div class="w-px h-8 bg-gray-300 mx-auto my-2"></div>
+                            <div class="flex justify-center gap-4 md:gap-8">
+                                ${data.architecture.doors.map(door => `
+                                    <div class="flex-1 max-w-xs">
+                                        <div class="w-full h-1 bg-gray-300"></div>
+                                        <div class="w-px h-4 bg-gray-300 mx-auto"></div>
+                                        <div class="bg-[#FDFBF8] border border-gray-200 rounded-lg p-4">
+                                            <p class="font-bold text-lg">${door.name}</p>
+                                            <p class="text-sm text-gray-500 italic">"${door.description}"</p>
+                                            <div class="mt-4 space-y-2 text-sm">
+                                                <p class="bg-gray-100 rounded p-1">${door.funnel}</p>
+                                                <p class="bg-gray-100 rounded p-1">${door.magnet}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                             <p class="mt-8 text-sm text-gray-500"><strong>Linked Asset (not in main navigation):</strong> ${data.architecture.linkedAsset}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderPlan() {
+            const data = appData.plan;
+            const sub = data.subsections;
+            return `
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">${data.title}</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">${data.intro}</p>
+
+                    <div class="space-y-12">
+                        <!-- Website Redesign -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <h3 class="text-xl font-bold mb-1 text-[#C78283]">${sub.website.title}</h3>
+                            <p class="text-gray-600 mb-6">${sub.website.intro}</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 text-center">
+                                ${sub.website.pages.map(page => `
+                                    <div class="bg-gray-50 border rounded-md p-4">
+                                        <div class="h-16 w-24 bg-gray-200 mx-auto mb-2 rounded"></div>
+                                        <p class="font-semibold text-sm">${page.split(':')[0]}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                             <p class="text-center bg-gray-50 p-3 rounded-md text-sm font-semibold">${sub.website.alignment}</p>
+                        </div>
+
+                        <!-- Funnels -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                             <h3 class="text-xl font-bold mb-6 text-[#94AFB7]">${sub.funnels.title}</h3>
+                             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-4">${sub.funnels.mentoring.name}</h4>
+                                    <div class="space-y-3">
+                                        ${sub.funnels.mentoring.steps.map(step => `
+                                            <div class="flex items-start">
+                                                <div class="mr-3 mt-1 flex-shrink-0 h-5 w-5 rounded-full bg-[#C78283] text-white flex items-center justify-center text-xs font-bold">${step.title.split('.')[0]}</div>
+                                                <div>
+                                                    <p class="font-semibold">${step.title.split('. ')[1]}</p>
+                                                    <p class="text-gray-600 text-sm">${step.text}</p>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg mb-4">${sub.funnels.realEstate.name}</h4>
+                                    <div class="space-y-3">
+                                        ${sub.funnels.realEstate.steps.map(step => `
+                                            <div class="flex items-start">
+                                                <div class="mr-3 mt-1 flex-shrink-0 h-5 w-5 rounded-full bg-[#94AFB7] text-white flex items-center justify-center text-xs font-bold">${step.title.split('.')[0]}</div>
+                                                <div>
+                                                    <p class="font-semibold">${step.title.split('. ')[1]}</p>
+                                                    <p class="text-gray-600 text-sm">${step.text}</p>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                             </div>
+                        </div>
+
+                        <!-- Lead Magnets -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <h3 class="text-xl font-bold mb-6 text-[#E0BD9B]">${sub.magnets.title}</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">${sub.magnets.mentoring.name}</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">${sub.magnets.mentoring.details.map(d => `<li>${d}</li>`).join('')}</ul>
+                                </div>
+                                 <div>
+                                    <h4 class="font-bold text-lg mb-2">${sub.magnets.realEstate.name}</h4>
+                                    <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">${sub.magnets.realEstate.details.map(d => `<li>${d}</li>`).join('')}</ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- SEO -->
+                        <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                            <h3 class="text-xl font-bold mb-6 text-[#A99B91]">${sub.seo.title}</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                ${sub.seo.areas.map(area => `
+                                    <div>
+                                        <h4 class="font-bold mb-2">${area.name}</h4>
+                                        <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">${area.items.map(i => `<li>${i}</li>`).join('')}</ul>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderTimeline() {
+            const data = appData.timeline;
+            return `
+                 <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">${data.title}</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">${data.intro}</p>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
+                        <div class="chart-container">
+                            <canvas id="timelineChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        ${data.details.map(week => `
+                            <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-100">
+                                <h4 class="font-bold text-lg mb-2">${week.week}</h4>
+                                <ul class="list-disc list-inside text-gray-600 space-y-1 text-sm">${week.tasks.map(t => `<li>${t}</li>`).join('')}</ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                 </div>
+            `;
+        }
+        
+        function renderInvestment() {
+            const data = appData.investment;
+            return `
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">${data.title}</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">${data.intro}</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                        <div class="lg:col-span-2">
+                             <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 h-full">
+                                <h3 class="text-xl font-bold mb-4 text-[#C78283]">${data.pricing.title}</h3>
+                                <p class="text-lg font-semibold">${data.pricing.package}</p>
+                                <p class="text-4xl font-bold my-4">${data.pricing.fee}</p>
+                                <div class="space-y-2 mb-4">
+                                    ${data.pricing.paymentPlan.map(p => `<p class="text-sm text-gray-600">${p}</p>`).join('')}
+                                </div>
+                                <h4 class="font-semibold mt-6 mb-2">Includes:</h4>
+                                <ul class="list-disc list-inside text-gray-600 text-sm space-y-1 mb-4">${data.pricing.includes.map(i => `<li>${i}</li>`).join('')}</ul>
+                                <p class="text-xs text-gray-500 bg-gray-50 p-2 rounded-md">${data.pricing.alacarte}</p>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-3">
+                            <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-100 mb-8">
+                                <h3 class="text-xl font-bold mb-4 text-[#94AFB7]">${data.metrics.title}</h3>
+                                <p class="text-sm text-gray-600 mb-4">This chart represents the types of metrics we will track. Our goal is to drive positive growth across all key areas.</p>
+                                <div class="chart-container" style="height: 250px; max-height: 250px;">
+                                    <canvas id="metricsChart"></canvas>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                ${data.metrics.categories.map(cat => `
+                                    <div>
+                                        <h4 class="font-semibold mb-2">${cat.name}</h4>
+                                        <ul class="list-disc list-inside text-gray-600 text-xs space-y-1">${cat.items.map(i => `<li>${i}</li>`).join('')}</ul>
+                                    </div>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                     <div class="mt-12 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-bold text-center mb-6 text-[#E0BD9B]">${data.nextSteps.title}</h3>
+                        <div class="flex flex-col md:flex-row justify-center items-center md:items-start gap-4 md:gap-0">
+                            ${data.nextSteps.steps.map((s, index) => `
+                                <div class="flex items-center flex-col md:flex-row text-center md:text-left w-full md:w-auto">
+                                    <div class="flex flex-col items-center">
+                                        <div class="h-10 w-10 rounded-full bg-[#E0BD9B] text-white flex items-center justify-center font-bold text-lg">${s.step}</div>
+                                        <strong class="mt-2 text-sm">${s.action}</strong>
+                                        <p class="text-xs text-gray-500 max-w-xs mt-1">${s.details}</p>
+                                    </div>
+                                    ${index < data.nextSteps.steps.length - 1 ? '<div class="hidden md:block w-16 h-px bg-gray-300 mx-4 mt-5"></div>' : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function createTimelineChart() {
+            const ctx = document.getElementById('timelineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: appData.timeline.chartData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Duration: ${context.raw.x[1] - context.raw.x[0]} week(s)`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 4,
+                            title: { display: true, text: 'Weeks' }
+                        },
+                        y: {
+                           grid: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        function createMetricsChart() {
+            const ctx = document.getElementById('metricsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: appData.investment.metrics.chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: { enabled: false }
+                    }
+                }
+            });
+        }
+
+        function switchTab(tab) {
+            navTabs.forEach(t => {
+                const is_active = t.dataset.tab === tab;
+                t.classList.toggle('tab-active', is_active);
+                t.classList.toggle('tab-inactive', !is_active);
+            });
+            
+            let content = '';
+            if (tab === 'overview') content = renderOverview();
+            else if (tab === 'plan') content = renderPlan();
+            else if (tab === 'timeline') content = renderTimeline();
+            else if (tab === 'investment') content = renderInvestment();
+            
+            contentContainer.innerHTML = content;
+
+            if (tab === 'timeline') createTimelineChart();
+            if (tab === 'investment') createMetricsChart();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+            switchTab('overview');
+        });
+    </script>
+</body>
+</html>
